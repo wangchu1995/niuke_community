@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wangchu.dao.mapper.UserMapper">
+
+    <sql id="selectField">
+        id,username,password,salt,email,type,status,activation_code,header_url,create_time
+    </sql>
+    <sql id="insertField">
+        username,password,salt,email,type,status,activation_code,header_url,create_time
+    </sql>
+
+    <select id="selectUserById" resultType="User">
+        select  <include refid="selectField"/> from user
+        where id=#{id}
+    </select>
+<!--    查询出来的参数自动与po类进行匹配-->
+
+    <select id="selectUserByUsername" resultType="User">
+        select <include refid="selectField"/> from user
+        where username=#{username}
+    </select>
+
+    <select id="selectUserByEmail" resultType="User">
+        select <include refid="selectField"/> from user
+        where email=#{email}
+    </select>
+
+    <insert id="insertOneUser" parameterType="User">
+        insert user(<include refid="insertField"/>)
+        values (#{username},#{password},#{salt},#{email},#{type},#{status},#{activationCode},#{headerUrl},
+        #{createTime})
+    </insert>
+
+    <update id="updateStatusById">
+        update user set status = #{status} where id = #{id}
+    </update>
+
+    <update id="updataHeaderUrlById">
+        update user set header_url=#{headerUrl} where id=#{id}
+    </update>
+
+    <update id="updatePasswordById">
+        update user set password=#{password} where id = #{id};
+    </update>
+
+</mapper>

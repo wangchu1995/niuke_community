@@ -1,0 +1,7 @@
+2020-04-08 16:01:26,257 INFO [main] NiukeApplicationTest [StartupInfoLogger.java:55] Starting NiukeApplicationTest on DESKTOP-GCF3F5T with PID 10056 (started by p71 in G:\java\99projects\niuke\commnity)
+2020-04-08 16:01:26,260 INFO [main] NiukeApplicationTest [SpringApplication.java:651] No active profile set, falling back to default profiles: default
+2020-04-08 16:01:28,133 INFO [main] o.s.s.c.ThreadPoolTaskExecutor [ExecutorConfigurationSupport.java:181] Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-08 16:01:28,238 INFO [main] o.s.b.a.w.s.WelcomePageHandlerMapping [WelcomePageHandlerMapping.java:58] Adding welcome page template: index
+2020-04-08 16:01:28,552 INFO [main] NiukeApplicationTest [StartupInfoLogger.java:61] Started NiukeApplicationTest in 2.832 seconds (JVM running for 3.638)
+2020-04-08 16:01:29,004 INFO [main] NiukeApplicationTest [NiukeApplicationTest.java:70] info log
+2020-04-08 16:01:29,015 INFO [SpringContextShutdownHook] o.s.s.c.ThreadPoolTaskExecutor [ExecutorConfigurationSupport.java:218] Shutting down ExecutorService 'applicationTaskExecutor'
