@@ -25,7 +25,7 @@
         where email=#{email}
     </select>
 
-    <insert id="insertOneUser" parameterType="User">
+    <insert id="insertOneUser" parameterType="User" keyProperty="id">
         insert user(<include refid="insertField"/>)
         values (#{username},#{password},#{salt},#{email},#{type},#{status},#{activationCode},#{headerUrl},
         #{createTime})
