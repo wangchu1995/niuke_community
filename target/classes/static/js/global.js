@@ -1,3 +1,4 @@
+var CONTEXT_PATH ="/community";
 window.alert = function(message) {
 	if(!$(".alert-box").length) {
 		$("body").append(
@@ -30,5 +31,5 @@ window.alert = function(message) {
 	$(".alert-box .modal-body p").text(message);
 	$(".alert-box").modal("show");
 
-	var CONTEXT_PATH ="/community";
+
 }

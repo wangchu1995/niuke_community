@@ -1,6 +1,8 @@
 package com.wangchu.service;
 
+import com.wangchu.dal.entity.LoginTicket;
 import com.wangchu.dal.entity.User;
+import com.wangchu.dao.mapper.LoginTicketMapper;
 import com.wangchu.dao.mapper.UserMapper;
 import com.wangchu.util.CommonUtils;
 import com.wangchu.util.CommunityConstant;
@@ -22,6 +24,8 @@ import java.util.Random;
 public class UserService {
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    LoginTicketMapper loginTicketMapper;
     @Value("${community.context-path}")
     private String domain;
     @Value("${server.servlet.context-path}")
@@ -30,6 +34,7 @@ public class UserService {
     TemplateEngine templateEngine;
     @Autowired
     MailClient mailClient;
+
 
     public User selectUserById(int id){
         User user = userMapper.selectUserById(id);
@@ -91,5 +96,99 @@ public class UserService {
         }
     }
 
+    public Map<String,Object> login(String username,String password,boolean rememberme){
+        //验证码在session域，在controller中判断
+        Map<String,Object> map = new HashMap<String, Object>();
+        //1.判空判断
+        if(StringUtils.isBlank(username)){
+            map.put("usernameMsg","用户名不能为空");
+            return map;
+        }
+        if(StringUtils.isBlank(password)){
+            map.put("passwordMsg","密码不能为空");
+            return map;
+        }
 
+        //2.用户名密码判断
+        User user = userMapper.selectUserByUsername(username);
+        if(user==null){
+            map.put("usernameMsg","用户名不存在");
+            return map;
+        }
+        if(user.getStatus()==0){
+            map.put("usernameMsg","用户未激活");
+            return map;
+        }
+        System.out.println(CommonUtils.md5(password+user.getSalt()));
+        if(!user.getPassword().equals(CommonUtils.md5(password+user.getSalt()))){
+            map.put("passwordMsg","密码不正确");
+            return map;
+        }
+
+        //3.创建ticket登录凭证
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(user.getId());
+        loginTicket.setStatus(0);
+        String ticket = CommonUtils.getUUID();
+        loginTicket.setTicket(ticket);
+        map.put("ticket",ticket);
+        int ticketSeconds = rememberme?CommunityConstant.LONG_TICKETTIME:CommunityConstant.DEFAULT_TICKETTIME;
+        map.put("expired",ticketSeconds);
+        loginTicket.setExpired(new Date(System.currentTimeMillis()+ticketSeconds*1000));
+        loginTicketMapper.insertLoginTicket(loginTicket);
+        return map;
+    }
+
+    public void logout(String ticket){
+        loginTicketMapper.updateLoginTicketStatus(ticket,1);
+    }
+
+    public Map<String,Object> sendVerificationMail(String mail,String kaptcha) throws MessagingException {
+        Map<String,Object> map = new HashMap<String, Object>();
+        //1.空值判断
+        if(StringUtils.isBlank(mail)){
+            map.put("mailMsg","邮箱为空值");
+            return map;
+        }
+        //2.查询邮箱用户
+        User user = userMapper.selectUserByEmail(mail);
+        if(user==null){
+            map.put("mailMsg","用户邮箱不存在");
+            return map;
+        }
+        //3.发送验证邮件
+        Context context = new Context();
+        context.setVariable("kaptcha", kaptcha);
+        context.setVariable("mail",mail);
+        String content = templateEngine.process("/mail/forget", context);
+        mailClient.sendMail(user.getEmail(),"牛客网-忘记密码验证",content);
+        return map;
+    }
+
+    public Map<String,Object> forget(String mail,String code,String newPassword){
+        Map<String,Object> map = new HashMap<String, Object>();
+        //1.空值判断
+        if(StringUtils.isBlank(mail)){
+            map.put("mailMsg","邮箱为空值");
+            return map;
+        }
+        if(StringUtils.isBlank(code)){
+            map.put("codeMsg","验证码为空值");
+            return map;
+        }
+        if(StringUtils.isBlank(newPassword)){
+            map.put("passwordMsg","密码为空值");
+            return map;
+        }
+        //2.查询邮箱用户
+        User user = userMapper.selectUserByEmail(mail);
+        if(user==null){
+            map.put("mailMsg","用户邮箱不存在");
+            return map;
+        }
+        //3.修改密码
+        String password = CommonUtils.md5(newPassword+user.getSalt());
+        userMapper.updatePasswordById(password,user.getId());
+        return map;
+    }
 }

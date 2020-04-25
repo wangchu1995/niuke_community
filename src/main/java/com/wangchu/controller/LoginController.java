@@ -4,17 +4,21 @@ import com.google.code.kaptcha.Producer;
 import com.wangchu.dal.entity.User;
 import com.wangchu.service.UserService;
 import com.wangchu.util.CommunityConstant;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
@@ -28,6 +32,8 @@ public class LoginController {
     UserService userService;
     @Autowired
     Producer kaptcha;
+    @Value("${server.servlet.context-path}")
+    private String contextPath;
 
     private  static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -79,6 +85,30 @@ public class LoginController {
         return "site/login";
     }
 
+    @RequestMapping(path = "/login",method = RequestMethod.POST)
+    public String login(String username,String password,String code,boolean rememberme,Model model,HttpSession session,HttpServletResponse response){
+        //1.检查验证码
+        String storeCode = (String) session.getAttribute("kaptcha");
+        if(StringUtils.isBlank(code)||!code.equalsIgnoreCase(storeCode)||StringUtils.isBlank(storeCode)){
+            model.addAttribute("codeMsg","验证码不正确");
+            return "/site/login";
+        }
+
+        //2.检查用户名，密码
+        Map<String,Object> map = userService.login(username,password,rememberme);
+        if(map.containsKey("ticket")){
+            Cookie cookie = new Cookie("ticket",map.get("ticket").toString());
+            cookie.setPath(contextPath);
+            cookie.setMaxAge((Integer) map.get("expired"));
+            response.addCookie(cookie);
+            return "redirect:/index";
+        }else{
+            model.addAttribute("usernameMsg",map.get("usernameMsg"));
+            model.addAttribute("passwordMsg",map.get("passwordMsg"));
+            return "/site/login";
+        }
+    }
+
     @RequestMapping(path = "/kaptcha",method = RequestMethod.GET)
     public void getKaptcha(HttpServletResponse response, HttpSession session){
         String text = kaptcha.createText();
@@ -92,6 +122,52 @@ public class LoginController {
             e.printStackTrace();
             logger.error("验证码生成错误");
         }
+    }
+
+    @RequestMapping(path = "/logout",method = RequestMethod.GET)
+    public String logout(@CookieValue("ticket") String ticket){
+        userService.logout(ticket);
+        return "redirect:/index";
+    }
+
+    @RequestMapping(path = "/forget",method = RequestMethod.GET)
+    public String forget(){
+        return "/site/forget";
+    }
+
+    @RequestMapping(path="/passwordKaptcha",method = RequestMethod.GET)
+    public String passwordKptcha(Model model,String mail,HttpSession session) throws MessagingException {
+        String text = kaptcha.createText();
+        session.setAttribute("passwordKaptcha",text);
+        Map<String, Object> map = userService.sendVerificationMail(mail,text);
+        //回写信息
+        if(map!=null){
+            model.addAttribute("mailMsg",map.get("mailMsg"));
+        }
+        return "/site/forget::mail";
+    }
+
+    @RequestMapping(path = "/forget",method = RequestMethod.POST)
+    public String forget(HttpSession session,String mail,String code,String newPassword,Model model){
+        //1.判空
+        if(StringUtils.isBlank(code)){
+            model.addAttribute("codeMsg","验证码为空");
+            return "/site/forget";
+        }
+        String passwordKaptcha = (String) session.getAttribute("passwordKaptcha");
+        if(!passwordKaptcha.equals(code)){
+            model.addAttribute("codeMsg","验证码错误");
+            return "/site/forget";
+        }
+        Map<String, Object> map = userService.forget(mail, code, newPassword);
+        if(map==null||map.isEmpty()){
+            return "redirect:/index";
+        }
+        for(String key:map.keySet()){
+            model.addAttribute(key,map.get(key));
+        }
+        return "/site/forget";
+
     }
 
 
