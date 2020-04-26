@@ -1,4 +1,4 @@
-package com.wangchu.controller.config;
+package com.wangchu.config;
 
 import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.impl.DefaultKaptcha;

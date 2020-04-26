@@ -191,4 +191,26 @@ public class UserService {
         userMapper.updatePasswordById(password,user.getId());
         return map;
     }
+
+    public LoginTicket findLoginTicket(String ticket){
+        LoginTicket loginTicket = loginTicketMapper.selectLoginTicketByTicket(ticket);
+        return loginTicket;
+    }
+
+    public int updateUserHeaderUrl(String url,int userId){
+        return userMapper.updataHeaderUrlById(url,userId);
+    }
+
+    public Map<String,Object> updatePassword(String oldPassword,String newPassword,int userId){
+        User user = userMapper.selectUserById(userId);
+        Map<String,Object> map = new HashMap<String, Object>();
+        oldPassword = CommonUtils.md5(oldPassword+user.getSalt());
+        if(!user.getPassword().equals(oldPassword)){
+            map.put("oldPasswordMsg","旧密码验证错误");
+            return map;
+        }
+        newPassword = CommonUtils.md5(newPassword+user.getSalt());
+        userMapper.updatePasswordById(newPassword,userId);
+        return map;
+    }
 }

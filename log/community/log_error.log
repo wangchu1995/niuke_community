@@ -348,3 +348,6 @@ org.springframework.expression.spel.SpelEvaluationException: EL1007E: Property o
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:835)
+2020-04-25 22:56:02,669 ERROR [http-nio-8080-exec-1] c.w.c.i.AlphaInterceptor [AlphaInterceptor.java:22] error:prehandle
+2020-04-25 22:57:24,846 ERROR [http-nio-8080-exec-1] c.w.c.i.AlphaInterceptor [AlphaInterceptor.java:22] error:prehandle
+2020-04-25 22:57:56,797 ERROR [http-nio-8080-exec-4] c.w.c.i.AlphaInterceptor [AlphaInterceptor.java:22] error:prehandle

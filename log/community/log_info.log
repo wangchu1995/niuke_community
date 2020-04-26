@@ -177,3 +177,86 @@
 2020-04-25 21:52:44,637 INFO [http-nio-8080-exec-1] o.s.w.s.DispatcherServlet [FrameworkServlet.java:547] Completed initialization in 5 ms
 2020-04-25 21:52:45,071 INFO [http-nio-8080-exec-1] c.z.h.HikariDataSource [HikariDataSource.java:110] HikariPool-1 - Starting...
 2020-04-25 21:52:45,190 INFO [http-nio-8080-exec-1] c.z.h.HikariDataSource [HikariDataSource.java:123] HikariPool-1 - Start completed.
+2020-04-25 22:50:33,886 INFO [main] c.w.NiukeApplication [StartupInfoLogger.java:55] Starting NiukeApplication on DESKTOP-GCF3F5T with PID 2676 (G:\java\99projects\niuke\commnity\target\classes started by p71 in G:\java\99projects\niuke\commnity)
+2020-04-25 22:50:33,896 INFO [main] c.w.NiukeApplication [SpringApplication.java:651] No active profile set, falling back to default profiles: default
+2020-04-25 22:50:34,818 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:92] Tomcat initialized with port(s): 8080 (http)
+2020-04-25 22:50:34,824 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Initializing ProtocolHandler ["http-nio-8080"]
+2020-04-25 22:50:34,825 INFO [main] o.a.c.c.StandardService [DirectJDKLog.java:173] Starting service [Tomcat]
+2020-04-25 22:50:34,825 INFO [main] o.a.c.c.StandardEngine [DirectJDKLog.java:173] Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-04-25 22:50:34,916 INFO [main] o.a.c.c.C.[.[.[/community] [DirectJDKLog.java:173] Initializing Spring embedded WebApplicationContext
+2020-04-25 22:50:34,916 INFO [main] o.s.w.c.ContextLoader [ServletWebServerApplicationContext.java:284] Root WebApplicationContext: initialization completed in 956 ms
+2020-04-25 22:50:35,255 INFO [main] o.s.s.c.ThreadPoolTaskExecutor [ExecutorConfigurationSupport.java:181] Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-25 22:50:35,298 INFO [main] o.s.b.a.w.s.WelcomePageHandlerMapping [WelcomePageHandlerMapping.java:58] Adding welcome page template: index
+2020-04-25 22:50:35,397 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Starting ProtocolHandler ["http-nio-8080"]
+2020-04-25 22:50:35,413 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:204] Tomcat started on port(s): 8080 (http) with context path '/community'
+2020-04-25 22:50:35,417 INFO [main] c.w.NiukeApplication [StartupInfoLogger.java:61] Started NiukeApplication in 2.099 seconds (JVM running for 3.653)
+2020-04-25 22:50:39,958 INFO [http-nio-8080-exec-2] o.a.c.c.C.[.[.[/community] [DirectJDKLog.java:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-04-25 22:50:39,959 INFO [http-nio-8080-exec-2] o.s.w.s.DispatcherServlet [FrameworkServlet.java:525] Initializing Servlet 'dispatcherServlet'
+2020-04-25 22:50:39,964 INFO [http-nio-8080-exec-2] o.s.w.s.DispatcherServlet [FrameworkServlet.java:547] Completed initialization in 4 ms
+2020-04-25 22:51:38,747 INFO [main] c.w.NiukeApplication [StartupInfoLogger.java:55] Starting NiukeApplication on DESKTOP-GCF3F5T with PID 27248 (G:\java\99projects\niuke\commnity\target\classes started by p71 in G:\java\99projects\niuke\commnity)
+2020-04-25 22:51:38,756 INFO [main] c.w.NiukeApplication [SpringApplication.java:651] No active profile set, falling back to default profiles: default
+2020-04-25 22:51:39,693 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:92] Tomcat initialized with port(s): 8080 (http)
+2020-04-25 22:51:39,699 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Initializing ProtocolHandler ["http-nio-8080"]
+2020-04-25 22:51:39,700 INFO [main] o.a.c.c.StandardService [DirectJDKLog.java:173] Starting service [Tomcat]
+2020-04-25 22:51:39,700 INFO [main] o.a.c.c.StandardEngine [DirectJDKLog.java:173] Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-04-25 22:51:39,791 INFO [main] o.a.c.c.C.[.[.[/community] [DirectJDKLog.java:173] Initializing Spring embedded WebApplicationContext
+2020-04-25 22:51:39,791 INFO [main] o.s.w.c.ContextLoader [ServletWebServerApplicationContext.java:284] Root WebApplicationContext: initialization completed in 982 ms
+2020-04-25 22:51:40,135 INFO [main] o.s.s.c.ThreadPoolTaskExecutor [ExecutorConfigurationSupport.java:181] Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-25 22:51:40,179 INFO [main] o.s.b.a.w.s.WelcomePageHandlerMapping [WelcomePageHandlerMapping.java:58] Adding welcome page template: index
+2020-04-25 22:51:40,306 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Starting ProtocolHandler ["http-nio-8080"]
+2020-04-25 22:51:40,322 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:204] Tomcat started on port(s): 8080 (http) with context path '/community'
+2020-04-25 22:51:40,325 INFO [main] c.w.NiukeApplication [StartupInfoLogger.java:61] Started NiukeApplication in 2.062 seconds (JVM running for 3.034)
+2020-04-25 22:51:43,267 INFO [http-nio-8080-exec-1] o.a.c.c.C.[.[.[/community] [DirectJDKLog.java:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-04-25 22:51:43,268 INFO [http-nio-8080-exec-1] o.s.w.s.DispatcherServlet [FrameworkServlet.java:525] Initializing Servlet 'dispatcherServlet'
+2020-04-25 22:51:43,273 INFO [http-nio-8080-exec-1] o.s.w.s.DispatcherServlet [FrameworkServlet.java:547] Completed initialization in 5 ms
+2020-04-25 22:52:18,632 INFO [main] c.w.NiukeApplication [StartupInfoLogger.java:55] Starting NiukeApplication on DESKTOP-GCF3F5T with PID 6692 (G:\java\99projects\niuke\commnity\target\classes started by p71 in G:\java\99projects\niuke\commnity)
+2020-04-25 22:52:18,639 INFO [main] c.w.NiukeApplication [SpringApplication.java:651] No active profile set, falling back to default profiles: default
+2020-04-25 22:52:19,523 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:92] Tomcat initialized with port(s): 8080 (http)
+2020-04-25 22:52:19,529 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Initializing ProtocolHandler ["http-nio-8080"]
+2020-04-25 22:52:19,530 INFO [main] o.a.c.c.StandardService [DirectJDKLog.java:173] Starting service [Tomcat]
+2020-04-25 22:52:19,530 INFO [main] o.a.c.c.StandardEngine [DirectJDKLog.java:173] Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-04-25 22:52:19,613 INFO [main] o.a.c.c.C.[.[.[/community] [DirectJDKLog.java:173] Initializing Spring embedded WebApplicationContext
+2020-04-25 22:52:19,613 INFO [main] o.s.w.c.ContextLoader [ServletWebServerApplicationContext.java:284] Root WebApplicationContext: initialization completed in 921 ms
+2020-04-25 22:52:19,939 INFO [main] o.s.s.c.ThreadPoolTaskExecutor [ExecutorConfigurationSupport.java:181] Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-25 22:52:19,981 INFO [main] o.s.b.a.w.s.WelcomePageHandlerMapping [WelcomePageHandlerMapping.java:58] Adding welcome page template: index
+2020-04-25 22:52:20,072 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Starting ProtocolHandler ["http-nio-8080"]
+2020-04-25 22:52:20,086 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:204] Tomcat started on port(s): 8080 (http) with context path '/community'
+2020-04-25 22:52:20,093 INFO [main] c.w.NiukeApplication [StartupInfoLogger.java:61] Started NiukeApplication in 1.932 seconds (JVM running for 2.888)
+2020-04-25 22:52:33,382 INFO [http-nio-8080-exec-1] o.a.c.c.C.[.[.[/community] [DirectJDKLog.java:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-04-25 22:52:33,384 INFO [http-nio-8080-exec-1] o.s.w.s.DispatcherServlet [FrameworkServlet.java:525] Initializing Servlet 'dispatcherServlet'
+2020-04-25 22:52:33,388 INFO [http-nio-8080-exec-1] o.s.w.s.DispatcherServlet [FrameworkServlet.java:547] Completed initialization in 4 ms
+2020-04-25 22:55:58,531 INFO [main] c.w.NiukeApplication [StartupInfoLogger.java:55] Starting NiukeApplication on DESKTOP-GCF3F5T with PID 25016 (G:\java\99projects\niuke\commnity\target\classes started by p71 in G:\java\99projects\niuke\commnity)
+2020-04-25 22:55:58,541 INFO [main] c.w.NiukeApplication [SpringApplication.java:651] No active profile set, falling back to default profiles: default
+2020-04-25 22:55:59,520 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:92] Tomcat initialized with port(s): 8080 (http)
+2020-04-25 22:55:59,525 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Initializing ProtocolHandler ["http-nio-8080"]
+2020-04-25 22:55:59,526 INFO [main] o.a.c.c.StandardService [DirectJDKLog.java:173] Starting service [Tomcat]
+2020-04-25 22:55:59,526 INFO [main] o.a.c.c.StandardEngine [DirectJDKLog.java:173] Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-04-25 22:55:59,607 INFO [main] o.a.c.c.C.[.[.[/community] [DirectJDKLog.java:173] Initializing Spring embedded WebApplicationContext
+2020-04-25 22:55:59,608 INFO [main] o.s.w.c.ContextLoader [ServletWebServerApplicationContext.java:284] Root WebApplicationContext: initialization completed in 979 ms
+2020-04-25 22:55:59,939 INFO [main] o.s.s.c.ThreadPoolTaskExecutor [ExecutorConfigurationSupport.java:181] Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-25 22:55:59,981 INFO [main] o.s.b.a.w.s.WelcomePageHandlerMapping [WelcomePageHandlerMapping.java:58] Adding welcome page template: index
+2020-04-25 22:56:00,072 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Starting ProtocolHandler ["http-nio-8080"]
+2020-04-25 22:56:00,086 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:204] Tomcat started on port(s): 8080 (http) with context path '/community'
+2020-04-25 22:56:00,090 INFO [main] c.w.NiukeApplication [StartupInfoLogger.java:61] Started NiukeApplication in 2.153 seconds (JVM running for 3.103)
+2020-04-25 22:56:02,652 INFO [http-nio-8080-exec-1] o.a.c.c.C.[.[.[/community] [DirectJDKLog.java:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-04-25 22:56:02,653 INFO [http-nio-8080-exec-1] o.s.w.s.DispatcherServlet [FrameworkServlet.java:525] Initializing Servlet 'dispatcherServlet'
+2020-04-25 22:56:02,658 INFO [http-nio-8080-exec-1] o.s.w.s.DispatcherServlet [FrameworkServlet.java:547] Completed initialization in 4 ms
+2020-04-25 22:56:02,668 INFO [http-nio-8080-exec-1] c.w.c.i.AlphaInterceptor [AlphaInterceptor.java:21] info:prehandle
+2020-04-25 22:57:04,825 INFO [main] c.w.NiukeApplication [StartupInfoLogger.java:55] Starting NiukeApplication on DESKTOP-GCF3F5T with PID 524 (G:\java\99projects\niuke\commnity\target\classes started by p71 in G:\java\99projects\niuke\commnity)
+2020-04-25 22:57:04,831 INFO [main] c.w.NiukeApplication [SpringApplication.java:651] No active profile set, falling back to default profiles: default
+2020-04-25 22:57:05,839 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:92] Tomcat initialized with port(s): 8080 (http)
+2020-04-25 22:57:05,845 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Initializing ProtocolHandler ["http-nio-8080"]
+2020-04-25 22:57:05,845 INFO [main] o.a.c.c.StandardService [DirectJDKLog.java:173] Starting service [Tomcat]
+2020-04-25 22:57:05,845 INFO [main] o.a.c.c.StandardEngine [DirectJDKLog.java:173] Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-04-25 22:57:05,940 INFO [main] o.a.c.c.C.[.[.[/community] [DirectJDKLog.java:173] Initializing Spring embedded WebApplicationContext
+2020-04-25 22:57:05,941 INFO [main] o.s.w.c.ContextLoader [ServletWebServerApplicationContext.java:284] Root WebApplicationContext: initialization completed in 1041 ms
+2020-04-25 22:57:06,318 INFO [main] o.s.s.c.ThreadPoolTaskExecutor [ExecutorConfigurationSupport.java:181] Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-25 22:57:06,361 INFO [main] o.s.b.a.w.s.WelcomePageHandlerMapping [WelcomePageHandlerMapping.java:58] Adding welcome page template: index
+2020-04-25 22:57:06,502 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Starting ProtocolHandler ["http-nio-8080"]
+2020-04-25 22:57:06,515 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:204] Tomcat started on port(s): 8080 (http) with context path '/community'
+2020-04-25 22:57:06,518 INFO [main] c.w.NiukeApplication [StartupInfoLogger.java:61] Started NiukeApplication in 2.21 seconds (JVM running for 3.149)
+2020-04-25 22:57:24,830 INFO [http-nio-8080-exec-1] o.a.c.c.C.[.[.[/community] [DirectJDKLog.java:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-04-25 22:57:24,831 INFO [http-nio-8080-exec-1] o.s.w.s.DispatcherServlet [FrameworkServlet.java:525] Initializing Servlet 'dispatcherServlet'
+2020-04-25 22:57:24,835 INFO [http-nio-8080-exec-1] o.s.w.s.DispatcherServlet [FrameworkServlet.java:547] Completed initialization in 4 ms
+2020-04-25 22:57:24,846 INFO [http-nio-8080-exec-1] c.w.c.i.AlphaInterceptor [AlphaInterceptor.java:21] info:prehandle
+2020-04-25 22:57:56,796 INFO [http-nio-8080-exec-4] c.w.c.i.AlphaInterceptor [AlphaInterceptor.java:21] info:prehandle
