@@ -20,6 +20,7 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         User user = hostHolder.getUsers();
 
+        //handler是拦截目标，在这里拦截方法
         if(handler instanceof HandlerMethod){
             //判断为方法,允许转型
             HandlerMethod handlerMethod = (HandlerMethod) handler;

@@ -5,6 +5,7 @@ import com.wangchu.dal.entity.User;
 import com.wangchu.service.UserService;
 import com.wangchu.util.CookieUtil;
 import com.wangchu.util.HostHolder;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,7 +25,7 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String ticket = CookieUtil.getValue(request, "ticket");
-        if (ticket!=null){
+        if (!StringUtils.isBlank(ticket)){
             //查询凭证
             LoginTicket loginTicket = userService.findLoginTicket(ticket);
             //凭证有效性和过期

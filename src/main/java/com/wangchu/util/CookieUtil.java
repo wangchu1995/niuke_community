@@ -10,11 +10,14 @@ public class CookieUtil {
         }
         Cookie[] cookies = request.getCookies();
         String value = "";
-        for(Cookie cookie:cookies){
-            if(cookie.getName().equals(key)){
-                value = cookie.getValue();
+        if(cookies!=null&&cookies.length>1){
+            for(Cookie cookie:cookies){
+                if(cookie.getName().equals(key)){
+                    value = cookie.getValue();
+                }
             }
         }
+
         return value;
     }
 }

@@ -1,5 +1,7 @@
 import com.wangchu.NiukeApplication;
+import com.wangchu.dal.entity.DiscussPost;
 import com.wangchu.dal.entity.LoginTicket;
+import com.wangchu.dao.mapper.DiscussPostMapper;
 import com.wangchu.dao.mapper.LoginTicketMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +18,8 @@ import java.util.Date;
 public class MapperTest {
     @Autowired
     LoginTicketMapper loginTicketMapper;
+    @Autowired
+    DiscussPostMapper discussPostMapper;
 
     @Test
     public void insertTicketTest(){
@@ -35,5 +39,15 @@ public class MapperTest {
         loginTicketMapper.updateLoginTicketStatus("abc",1);
         loginTicket = loginTicketMapper.selectLoginTicketByTicket("abc");
         System.out.println(loginTicket);
+    }
+
+    @Test
+    public void insertDiscussPostTest(){
+        DiscussPost post = new DiscussPost();
+        post.setUserId(250);
+        post.setContent("testContent");
+        post.setTitle("test");
+        post.setCreateTime(new Date());
+        discussPostMapper.insertDiscussPost(post);
     }
 }
