@@ -28,6 +28,7 @@ public class Page {
         return showItems;
     }
 
+
     public void setShowItems(int showItems) {
         if(showItems>0&&showItems<100){
         this.showItems = showItems;
@@ -65,11 +66,11 @@ public class Page {
     public int getOffset(){
         return (current-1)*showItems;
     }
-    //获取起始页码
 
+    //获取起始页码
     public int getFrom(){
         if(getTo()>=getTotalPages()-1){
-            return getTotalPages()-4;
+            return Math.max(1,getTotalPages()-4);
         }
         int from = current-2;
         return from<1?1:from;
@@ -77,7 +78,7 @@ public class Page {
     //获取结束页码
     public int getTo(){
         if(current<=2){
-            return 5;
+            return Math.min(5,getTotalPages());
         }
         int to = current+2;
         int total = getTotalPages();

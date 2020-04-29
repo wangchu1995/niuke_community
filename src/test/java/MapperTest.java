@@ -1,6 +1,8 @@
 import com.wangchu.NiukeApplication;
+import com.wangchu.dal.entity.Comment;
 import com.wangchu.dal.entity.DiscussPost;
 import com.wangchu.dal.entity.LoginTicket;
+import com.wangchu.dao.mapper.CommentMapper;
 import com.wangchu.dao.mapper.DiscussPostMapper;
 import com.wangchu.dao.mapper.LoginTicketMapper;
 import org.junit.Test;
@@ -11,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -20,6 +23,8 @@ public class MapperTest {
     LoginTicketMapper loginTicketMapper;
     @Autowired
     DiscussPostMapper discussPostMapper;
+    @Autowired
+    CommentMapper commentMapper;
 
     @Test
     public void insertTicketTest(){
@@ -49,5 +54,19 @@ public class MapperTest {
         post.setTitle("test");
         post.setCreateTime(new Date());
         discussPostMapper.insertDiscussPost(post);
+    }
+
+    @Test
+    public void selectCommentTest(){
+        List<Comment> comments = commentMapper.selectComments(1, 228, 0, 5);
+        for(Comment c:comments){
+            System.out.println(c);
+        }
+    }
+
+    @Test
+    public void selectCountCommentTest(){
+        int count = commentMapper.selectCommentCount(1, 228);
+        System.out.println(count);
     }
 }
