@@ -213,4 +213,8 @@ public class UserService {
         userMapper.updatePasswordById(newPassword,userId);
         return map;
     }
+
+    public User findUserByName(String username){
+        return userMapper.selectUserByUsername(username);
+    }
 }

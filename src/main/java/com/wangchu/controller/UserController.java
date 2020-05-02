@@ -87,7 +87,6 @@ public class UserController {
         String suffix = fileName.substring(fileName.lastIndexOf("."));
         response.setContentType("image/"+suffix.replace(".",""));
         String contentType = response.getContentType();
-        System.out.println(contentType);
         //3.响应图片
         OutputStream os = null;
         FileInputStream fis = null;

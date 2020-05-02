@@ -16,11 +16,11 @@ public class AlphaInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("prehandle");
-        logger.debug("preHandler");
-        logger.info("info:prehandle");
-        logger.error("error:prehandle");
-        logger.warn("warn:prehandle");
+//        System.out.println("prehandle");
+//        logger.debug("preHandler");
+//        logger.info("info:prehandle");
+//        logger.error("error:prehandle");
+//        logger.warn("warn:prehandle");
         return true;
     }
 

@@ -33,5 +33,10 @@
 
     </select>
 
+    <update id="updateCommentCount">
+        update discuss_post set comment_count = #{count}
+        where id = #{postId}
+    </update>
+
 
 </mapper>
