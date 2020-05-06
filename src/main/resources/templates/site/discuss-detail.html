@@ -75,7 +75,7 @@
 				</h6>
 				<!-- 作者 -->
 				<div class="media pb-3 border-bottom">
-					<a href="profile.html">
+					<a th:href="@{|/user/profile/${user.id}|}">
 						<img th:src="${user.headerUrl}" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
 					</a>
 					<div class="media-body">
@@ -83,7 +83,11 @@
 						<div class="text-muted mt-3">
 							发布于 <b th:text="${#dates.format(post.createTime,'yy-MM-dd HH:mm:ss')}">2019-04-15 15:32:18</b>
 							<ul class="d-inline float-right">
-								<li class="d-inline ml-2"><a href="#" class="text-primary">赞 11</a></li>
+								<li class="d-inline ml-2">
+									<a href="javascript:;" th:onclick="|like(this,1,${post.id},${post.userId});|" class="text-primary">
+									<b th:text="${postLikeStatus==1?'已赞':'赞'}">赞 </b>
+									<i th:text="${postLikeStatus}">11</i>
+									</a></li>
 								<li class="d-inline ml-2">|</li>
 								<li class="d-inline ml-2"><a href="#replyform" class="text-primary">回帖 <span th:text="${post.commentCount}"></span></a></li>
 							</ul>
@@ -115,7 +119,7 @@
 				<ul class="list-unstyled mt-4" th:each="cMap:${commentList}">
 					<!-- 第1条回帖 -->
 					<li class="media pb-3 pt-3 mb-3 border-bottom">
-						<a href="profile.html">
+						<a th:href="@{|/user/profile/${cMap.user.id}|}">
 							<img th:src="${cMap.user.headerUrl}" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
 						</a>
 						<div class="media-body">
@@ -129,7 +133,9 @@
 							<div class="mt-4 text-muted font-size-12">
 								<span>发布于 <b th:text="${#dates.format(cMap.comment.createTime,'YY-MM-dd HH:mm:ss')}">2019-04-15 15:32:18</b></span>
 								<ul class="d-inline float-right">
-									<li class="d-inline ml-2"><a href="#" class="text-primary">赞(1)</a></li>
+									<li class="d-inline ml-2"><a href="javascript:;" th:onclick="|like(this,2,${cMap.comment.id},${cMap.comment.userId});|" class="text-primary">
+										<b th:text="${cMap.postLikeStatus==1?'已赞':'赞'}">赞 </b>
+										<i th:text="${cMap.postLikeStatus}">11</i></a>
 									<li class="d-inline ml-2">|</li>
 									<li class="d-inline ml-2"><a href="#" class="text-primary">回复(<i th:text="${cMap.replyCount}"></i>)</a></li>
 								</ul>
@@ -150,7 +156,11 @@
 									<div class="mt-3">
 										<span th:text="${#dates.format(rMap.reply.createTime,'YY-MM-dd HH:mm:ss')}">2019-04-15 15:32:18</span>
 										<ul class="d-inline float-right">
-											<li class="d-inline ml-2"><a href="#" class="text-primary">赞(1)</a></li>
+											<li class="d-inline ml-2">
+												<a href="javascript:;" th:onclick="|like(this,2,${rMap.reply.id},${rMap.reply.userId});|" class="text-primary">
+													<b th:text="${rMap.postLikeStatus==1?'已赞':'赞'}">赞 </b>
+													<i th:text="${rMap.postLikeStatus}">11</i>
+												</a></li>
 											<li class="d-inline ml-2">|</li>
 											<li class="d-inline ml-2"><a th:href="|#huifu-${rMapStat.count}|" data-toggle="collapse" class="text-primary">回复</a></li>
 										</ul>
@@ -288,6 +298,7 @@
 	<script th:src="@{/webjars/jquery/3.3.1/jquery.js}" crossorigin="anonymous"></script>
 	<script th:src="@{/webjars/popper.js/1.14.7/popper.js}" crossorigin="anonymous"></script>
 	<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.js}" crossorigin="anonymous"></script>
-	<script th:src="@{js/global.js}"></script>
+	<script th:src="@{/js/global.js}"></script>
+	<script th:src="@{/js/like.js}"></script>
 </body>
 </html>

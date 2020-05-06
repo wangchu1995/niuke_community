@@ -4,11 +4,15 @@ import com.wangchu.dal.entity.DiscussPost;
 import com.wangchu.dal.entity.Page;
 import com.wangchu.dal.entity.User;
 import com.wangchu.service.DiscussPostService;
+import com.wangchu.service.LikeService;
 import com.wangchu.service.UserService;
+import com.wangchu.util.CommunityConstant;
+import com.wangchu.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +26,10 @@ public class HomeController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    LikeService likeService;
+    @Autowired
+    HostHolder hostHolder;
 
     @RequestMapping("/index")
     public String findDiscussPost(Model model, Page page){
@@ -44,6 +52,13 @@ public class HomeController {
             Map<String,Object> map = new HashMap<String, Object>();
             map.put("post",discussPost);
             map.put("user",user);
+            //点赞处理
+            long likeCount = likeService.findLikeCount(CommunityConstant.ENTITY_TYPE_POST,discussPost.getId());
+            User users = hostHolder.getUsers();
+            int likeStatus = users==null?0:likeService.findLikeStatus(users.getId(),CommunityConstant.ENTITY_TYPE_POST,discussPost.getId());
+            map.put("postLikeCount",likeCount);
+            map.put("postLikeStatus",likeStatus);
+
             list.add(map);
         }
         model.addAttribute("postlist",list);
@@ -52,6 +67,11 @@ public class HomeController {
 
         model.addAttribute("page",page);
         return "index";
+    }
+
+    @RequestMapping(path="/error",method = RequestMethod.GET)
+    public String error(){
+        return "/error/500";
     }
 
 

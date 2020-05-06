@@ -1,9 +1,3 @@
-2020-05-02 09:58:02,741 WARN [http-nio-8080-exec-1] o.s.w.s.m.s.DefaultHandlerExceptionResolver [AbstractHandlerExceptionResolver.java:199] Resolved [org.springframework.web.bind.MissingRequestCookieException: Missing cookie 'ticket' for method parameter of type String]
-2020-05-02 09:58:08,855 WARN [http-nio-8080-exec-2] c.w.c.i.AlphaInterceptor [AlphaInterceptor.java:23] warn:prehandle
-2020-05-02 09:58:09,414 WARN [http-nio-8080-exec-3] o.a.c.u.SessionIdGeneratorBase [DirectJDKLog.java:173] Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [508] milliseconds.
-2020-05-02 09:58:17,513 WARN [http-nio-8080-exec-7] c.w.c.i.AlphaInterceptor [AlphaInterceptor.java:23] warn:prehandle
-2020-05-02 09:59:26,073 WARN [http-nio-8080-exec-9] c.w.c.i.AlphaInterceptor [AlphaInterceptor.java:23] warn:prehandle
-2020-05-02 09:59:36,759 WARN [http-nio-8080-exec-1] c.w.c.i.AlphaInterceptor [AlphaInterceptor.java:23] warn:prehandle
-2020-05-02 10:04:53,529 WARN [http-nio-8080-exec-5] o.a.c.u.SessionIdGeneratorBase [DirectJDKLog.java:173] Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [505] milliseconds.
-2020-05-02 10:07:02,917 WARN [http-nio-8080-exec-9] o.s.w.s.m.s.DefaultHandlerExceptionResolver [AbstractHandlerExceptionResolver.java:199] Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported]
-2020-05-02 10:17:38,255 WARN [http-nio-8080-exec-3] o.a.c.u.SessionIdGeneratorBase [DirectJDKLog.java:173] Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [483] milliseconds.
+2020-05-06 13:12:11,640 WARN [http-nio-8080-exec-3] o.a.c.u.SessionIdGeneratorBase [DirectJDKLog.java:173] Creation of SecureRandom instance for session ID generation using [SHA1PRNG] took [442] milliseconds.
+2020-05-06 13:47:46,469 WARN [HikariPool-1 housekeeper] c.z.h.p.HikariPool [HikariPool.java:779] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=47s545ms568µs100ns).
+2020-05-06 13:54:34,297 WARN [HikariPool-1 housekeeper] c.z.h.p.HikariPool [HikariPool.java:779] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m30s545ms485µs200ns).

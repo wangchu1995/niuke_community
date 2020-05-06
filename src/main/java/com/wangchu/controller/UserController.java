@@ -2,6 +2,7 @@ package com.wangchu.controller;
 
 import com.wangchu.annotation.LoginRequired;
 import com.wangchu.dal.entity.User;
+import com.wangchu.service.LikeService;
 import com.wangchu.service.UserService;
 import com.wangchu.util.CommonUtils;
 import com.wangchu.util.HostHolder;
@@ -37,6 +38,8 @@ public class UserController {
     String contextPath;
     @Value("${community.path.upload}")
     String uploadPath;
+    @Autowired
+    LikeService likeService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -128,5 +131,14 @@ public class UserController {
             }
         }
         return "/site/setting";
+    }
+
+    @RequestMapping(path = "/profile/{userId}",method = RequestMethod.GET)
+    public String getProfilePage(@PathVariable("userId")int userId,Model model){
+        User user = userService.selectUserById(userId);
+        model.addAttribute("user",user);
+        int userLikeCount = likeService.findUserLikeCount(user.getId());
+        model.addAttribute("userLikeCount",userLikeCount);
+        return "/site/profile";
     }
 }

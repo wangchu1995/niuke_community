@@ -28,6 +28,7 @@ public class MessageController {
 
     @RequestMapping(path = "/letter/list",method = RequestMethod.GET)
     public String getConversations(Model model, Page page){
+//        Integer.valueOf("abc");
         //1.处理分页插件
         User user = hostHolder.getUsers();
         page.setShowItems(5);
@@ -102,6 +103,7 @@ public class MessageController {
     @RequestMapping(path="/letter/send",method = RequestMethod.POST)
     @ResponseBody
     public String sendLetter(String toName,String content){
+        Integer.valueOf("abc");
         User toUser = userService.findUserByName(toName);
         if(toUser==null)
             return CommonUtils.getJSONString(0,"目标用户不存在");

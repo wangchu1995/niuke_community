@@ -12,10 +12,11 @@ function send_letter() {
 		CONTEXT_PATH+"/letter/send",
 		{"toName":toName,"content":content},
 		function (data) {
+			data = $.parseJSON(data);
 			if(data.code==0){
-				$("hintModalLabel").text(data.msg);
+				$("#hintBody").text("发送成功");
 			}else{
-				$("hintModalLabel").text("发送成功");
+				$("#hintBody").text(data.msg);
 			}
 			$("#hintModal").modal("show");
 			setTimeout(function(){
