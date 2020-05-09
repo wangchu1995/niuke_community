@@ -3,12 +3,15 @@ package com.wangchu.controller;
 import com.google.code.kaptcha.Producer;
 import com.wangchu.dal.entity.User;
 import com.wangchu.service.UserService;
+import com.wangchu.util.CommonUtils;
 import com.wangchu.util.CommunityConstant;
+import com.wangchu.util.RedisKeyUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -25,6 +28,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class LoginController {
@@ -34,6 +38,8 @@ public class LoginController {
     Producer kaptcha;
     @Value("${server.servlet.context-path}")
     private String contextPath;
+    @Autowired
+    RedisTemplate redisTemplate;
 
     private  static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -86,9 +92,17 @@ public class LoginController {
     }
 
     @RequestMapping(path = "/login",method = RequestMethod.POST)
-    public String login(String username,String password,String code,boolean rememberme,Model model,HttpSession session,HttpServletResponse response){
+    public String login(String username,String password,String code,boolean rememberme,Model model,HttpSession session,HttpServletResponse response,
+                        @CookieValue("kaptcha")String kaptchaString){
         //1.检查验证码
-        String storeCode = (String) session.getAttribute("kaptcha");
+//        String storeCode = (String) session.getAttribute("kaptcha");
+        String storeCode = null;
+        if(StringUtils.isNotBlank(kaptchaString)){
+            String redisKey = RedisKeyUtil.getKaptchaKey(kaptchaString);
+            storeCode = (String) redisTemplate.opsForValue().get(redisKey);
+        }
+
+
         if(StringUtils.isBlank(code)||!code.equalsIgnoreCase(storeCode)||StringUtils.isBlank(storeCode)){
             model.addAttribute("codeMsg","验证码不正确");
             return "/site/login";
@@ -112,7 +126,15 @@ public class LoginController {
     @RequestMapping(path = "/kaptcha",method = RequestMethod.GET)
     public void getKaptcha(HttpServletResponse response, HttpSession session){
         String text = kaptcha.createText();
-        session.setAttribute("kaptcha",text);
+//        session.setAttribute("kaptcha",text);
+        String kaptchaSting = CommonUtils.getUUID();
+        Cookie cookie = new Cookie("kaptcha",kaptchaSting);
+        cookie.setMaxAge(60);
+        cookie.setPath(contextPath);
+        response.addCookie(cookie);
+        String redisKey  = RedisKeyUtil.getKaptchaKey(kaptchaSting);
+        redisTemplate.opsForValue().set(redisKey,text,60, TimeUnit.SECONDS);
+
         BufferedImage image = kaptcha.createImage(text);
         response.setContentType("image/png");
         try {
@@ -135,6 +157,7 @@ public class LoginController {
         return "/site/forget";
     }
 
+    //登录时,忘记密码，邮箱找回功能--->发送验证码邮件
     @RequestMapping(path="/passwordKaptcha",method = RequestMethod.GET)
     public String passwordKptcha(Model model,String mail,HttpSession session) throws MessagingException {
         String text = kaptcha.createText();
@@ -147,6 +170,7 @@ public class LoginController {
         return "/site/forget::mail";
     }
 
+    //登录时,忘记密码，邮箱找回功能--->验证并找回密码
     @RequestMapping(path = "/forget",method = RequestMethod.POST)
     public String forget(HttpSession session,String mail,String code,String newPassword,Model model){
         //1.判空

@@ -43,6 +43,13 @@ public class CommentService {
             discussPostService.updateCommentCount(comment.getTargetId(),count);
         }
         return i;
+    }
 
+    public List<Comment> selectCommentByUserId(int userId,int entityType,int offset,int limit){
+        return commentMapper.selectCommentsByUserId(userId,entityType,offset,limit);
+    }
+
+    public int selectCountByUserId(int userId,int entityType){
+        return commentMapper.selectCountByUserId(userId,entityType);
     }
 }

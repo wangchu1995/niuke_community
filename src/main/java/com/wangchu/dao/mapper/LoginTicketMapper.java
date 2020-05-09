@@ -4,6 +4,7 @@ import com.wangchu.dal.entity.LoginTicket;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
+@Deprecated
 public interface LoginTicketMapper {
     @Insert({"insert login_ticket(user_id,ticket,status,expired) ",
     "values(#{userId},#{ticket},#{status},#{expired}) "})

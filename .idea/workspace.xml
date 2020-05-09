@@ -29,44 +29,36 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="386f33d7-e261-46e9-9788-38fdd307d855" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/aspect/ServiceLogAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/config/RedisConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/LikeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/advice/ExceptionAdvice.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/service/LikeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/util/RedisKeyUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/like.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/error/404.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/error/500.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/RedisTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="386f33d7-e261-46e9-9788-38fdd307d855" name="Default Changelist" comment="统一处理异常(controllerAdvice)，统一记录日志(aspect切面),redis点赞/查看赞">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/FollowController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/service/FollowService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/generatorConfig.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/community/log_error.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/community/log_error.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/community/log_info.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/community/log_info.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log/community/log_warn.log" beforeDir="false" afterPath="$PROJECT_DIR$/log/community/log_warn.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/DiscussPostController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/DiscussPostController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/HomeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/letter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/letter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wangchu/dao/mapper/CommentMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/dao/mapper/CommentMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wangchu/dao/mapper/LoginTicketMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/dao/mapper/LoginTicketMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wangchu/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/service/CommentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wangchu/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wangchu/util/CommunityConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/util/CommunityConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wangchu/util/RedisKeyUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wangchu/util/RedisKeyUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/CommentMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/CommentMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/discuss-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/discuss-detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/followee.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/followee.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/follower.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/follower.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/my-post.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/my-post.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/my-reply.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/my-reply.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/site/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/site/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wangchu/NiukeApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wangchu/NiukeApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wangchu/controller/HomeController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wangchu/controller/HomeController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wangchu/dal/entity/DiscussPost.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wangchu/dal/entity/DiscussPost.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wangchu/dal/entity/Page.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wangchu/dal/entity/Page.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wangchu/dal/entity/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wangchu/dal/entity/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wangchu/dao/mapper/DiscussPostMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wangchu/dao/mapper/DiscussPostMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wangchu/dao/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wangchu/dao/mapper/UserMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wangchu/service/DiscussPostService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wangchu/service/DiscussPostService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/wangchu/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/wangchu/service/UserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/js/letter.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/letter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/NiukeApplicationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/NiukeApplicationTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/MapperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/MapperTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/discuss-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/discuss-detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/site/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/site/profile.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +125,7 @@
     <property name="ToolWindowDB Browser.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../所有素材和源码/所有素材和源码/第四章素材和源码/community-4.7/community" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../01面试题笔试题知识点汇总/04 数据库/Mybatis/mybatis-master" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -153,17 +145,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\java\99projects\niuke\commnity\src\main\resources" />
       <recent name="G:\java\99projects\niuke\commnity\src\main\resources\static\js" />
       <recent name="G:\java\99projects\niuke\commnity\src\main\resources\templates" />
       <recent name="G:\java\99projects\niuke\commnity\src\main\resources\mapper" />
       <recent name="G:\java\99projects\niuke\commnity\src\main\resources\template" />
-      <recent name="G:\java\99projects\niuke\commnity\src\main\resources\static" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
       <recent name="com.wangchu.config" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\java\99projects\niuke\commnity\upload" />
       <recent name="G:\java\99projects\niuke\commnity" />
       <recent name="G:\java\99projects\niuke\commnity\src\main\resources" />
     </key>
@@ -179,11 +172,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MapperTest.selectCommentTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MapperTest.selectCommentCount" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="commnity" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="MapperTest" />
-      <option name="METHOD_NAME" value="selectCommentTest" />
+      <option name="METHOD_NAME" value="selectCommentCount" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -228,11 +221,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MapperTest.selectCommentCount" />
         <item itemvalue="JUnit.MapperTest.updateMessageStatus" />
         <item itemvalue="JUnit.MapperTest.insertMessageTest" />
         <item itemvalue="JUnit.MapperTest.selectMessageTets" />
         <item itemvalue="JUnit.MapperTest.selectCountCommentTest" />
-        <item itemvalue="JUnit.MapperTest.selectCommentTest" />
       </list>
     </recent_temporary>
   </component>
@@ -266,7 +259,8 @@
       <workItem from="1588223785858" duration="26701000" />
       <workItem from="1588436930823" duration="194000" />
       <workItem from="1588437136358" duration="305000" />
-      <workItem from="1588557268672" duration="11706000" />
+      <workItem from="1588557268672" duration="17709000" />
+      <workItem from="1588905334009" duration="24507000" />
     </task>
     <task id="LOCAL-00001" summary="首次提交">
       <created>1586335063886</created>
@@ -324,7 +318,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588387630045</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="统一处理异常(controllerAdvice)，统一记录日志(aspect切面),redis点赞/查看赞">
+      <created>1588754978661</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1588754978661</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,6 +341,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="首次提交" />
@@ -348,13 +350,14 @@
     <MESSAGE value="过滤敏感词，发布帖子，查看帖子详情" />
     <MESSAGE value="查看评论，添加评论" />
     <MESSAGE value="查看私信，私信详情，删除私信" />
-    <option name="LAST_COMMIT_MESSAGE" value="查看私信，私信详情，删除私信" />
+    <MESSAGE value="统一处理异常(controllerAdvice)，统一记录日志(aspect切面),redis点赞/查看赞" />
+    <option name="LAST_COMMIT_MESSAGE" value="统一处理异常(controllerAdvice)，统一记录日志(aspect切面),redis点赞/查看赞" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="0" y="226" key="#Auto_Import" timestamp="1588238343153">
+    <state x="0" y="226" key="#Auto_Import" timestamp="1588925605435">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="0" y="226" key="#Auto_Import/0.0.1920.1160@0.0.1920.1160" timestamp="1588238343153" />
+    <state x="0" y="226" key="#Auto_Import/0.0.1920.1160@0.0.1920.1160" timestamp="1588925605435" />
     <state x="586" y="258" key="#Inspections" timestamp="1588741653102">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
@@ -375,88 +378,87 @@
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
     <state x="413" y="143" key="CommitChangelistDialog2/0.0.1920.1160@0.0.1920.1160" timestamp="1588387628538" />
-    <state x="736" y="341" key="FileChooserDialogImpl" timestamp="1588742834018">
+    <state x="736" y="341" key="FileChooserDialogImpl" timestamp="1588940689106">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="736" y="341" key="FileChooserDialogImpl/0.0.1920.1160@0.0.1920.1160" timestamp="1588742834018" />
-    <state width="1877" height="291" key="GridCell.Tab.0.bottom" timestamp="1588754694109">
+    <state x="736" y="341" key="FileChooserDialogImpl/0.0.1920.1160@0.0.1920.1160" timestamp="1588940689106" />
+    <state width="1877" height="461" key="GridCell.Tab.0.bottom" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.0.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694109" />
-    <state width="1877" height="291" key="GridCell.Tab.0.center" timestamp="1588754694109">
+    <state width="1877" height="461" key="GridCell.Tab.0.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state width="1877" height="461" key="GridCell.Tab.0.center" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.0.center/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694109" />
-    <state width="1877" height="291" key="GridCell.Tab.0.left" timestamp="1588754694109">
+    <state width="1877" height="461" key="GridCell.Tab.0.center/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state width="1877" height="461" key="GridCell.Tab.0.left" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.0.left/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694109" />
-    <state width="1877" height="291" key="GridCell.Tab.0.right" timestamp="1588754694109">
+    <state width="1877" height="461" key="GridCell.Tab.0.left/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state width="1877" height="461" key="GridCell.Tab.0.right" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.0.right/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694109" />
-    <state width="1877" height="291" key="GridCell.Tab.1.bottom" timestamp="1588754694110">
+    <state width="1877" height="461" key="GridCell.Tab.0.right/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state width="1877" height="461" key="GridCell.Tab.1.bottom" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.1.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694110" />
-    <state width="1877" height="291" key="GridCell.Tab.1.center" timestamp="1588754694109">
+    <state width="1877" height="461" key="GridCell.Tab.1.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state width="1877" height="461" key="GridCell.Tab.1.center" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.1.center/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694109" />
-    <state width="1877" height="291" key="GridCell.Tab.1.left" timestamp="1588754694109">
+    <state width="1877" height="461" key="GridCell.Tab.1.center/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state width="1877" height="461" key="GridCell.Tab.1.left" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.1.left/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694109" />
-    <state width="1877" height="291" key="GridCell.Tab.1.right" timestamp="1588754694109">
+    <state width="1877" height="461" key="GridCell.Tab.1.left/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state width="1877" height="461" key="GridCell.Tab.1.right" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.1.right/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694109" />
-    <state width="1877" height="291" key="GridCell.Tab.2.bottom" timestamp="1588754694110">
+    <state width="1877" height="461" key="GridCell.Tab.1.right/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state width="1877" height="461" key="GridCell.Tab.2.bottom" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.2.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694110" />
-    <state width="1877" height="291" key="GridCell.Tab.2.center" timestamp="1588754694110">
+    <state width="1877" height="461" key="GridCell.Tab.2.bottom/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state width="1877" height="461" key="GridCell.Tab.2.center" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.2.center/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694110" />
-    <state width="1877" height="291" key="GridCell.Tab.2.left" timestamp="1588754694110">
+    <state width="1877" height="461" key="GridCell.Tab.2.center/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state width="1877" height="461" key="GridCell.Tab.2.left" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.2.left/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694110" />
-    <state width="1877" height="291" key="GridCell.Tab.2.right" timestamp="1588754694110">
+    <state width="1877" height="461" key="GridCell.Tab.2.left/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state width="1877" height="461" key="GridCell.Tab.2.right" timestamp="1588984770833">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state width="1877" height="291" key="GridCell.Tab.2.right/0.0.1920.1160@0.0.1920.1160" timestamp="1588754694110" />
-    <state x="723" y="291" key="SettingsEditor" timestamp="1588741710871">
+    <state width="1877" height="461" key="GridCell.Tab.2.right/0.0.1920.1160@0.0.1920.1160" timestamp="1588984770833" />
+    <state x="723" y="291" key="SettingsEditor" timestamp="1588776911836">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="723" y="291" key="SettingsEditor/0.0.1920.1160@0.0.1920.1160" timestamp="1588741710870" />
-    <state x="552" y="311" key="Vcs.Push.Dialog.v2" timestamp="1588387662551">
+    <state x="723" y="291" key="SettingsEditor/0.0.1920.1160@0.0.1920.1160" timestamp="1588776911836" />
+    <state x="552" y="311" key="Vcs.Push.Dialog.v2" timestamp="1588984758092">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="552" y="311" key="Vcs.Push.Dialog.v2/0.0.1920.1160@0.0.1920.1160" timestamp="1588387662551" />
-    <state x="751" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1588294930889">
+    <state x="552" y="311" key="Vcs.Push.Dialog.v2/0.0.1920.1160@0.0.1920.1160" timestamp="1588984758092" />
+    <state x="510" y="634" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588984742720">
       <screen x="0" y="0" width="1920" height="1160" />
     </state>
-    <state x="751" y="259" width="672" height="678" key="search.everywhere.popup/0.0.1920.1160@0.0.1920.1160" timestamp="1588294930889" />
+    <state x="510" y="634" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1160@0.0.1920.1160" timestamp="1588984742720" />
+    <state x="751" y="259" width="672" height="678" key="search.everywhere.popup" timestamp="1588938623612">
+      <screen x="0" y="0" width="1920" height="1160" />
+    </state>
+    <state x="751" y="259" width="672" height="678" key="search.everywhere.popup/0.0.1920.1160@0.0.1920.1160" timestamp="1588938623612" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/wangchu/controller/LoginController.java</url>
-          <line>152</line>
+          <line>176</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/wangchu/service/UserService.java</url>
-          <line>168</line>
+          <line>187</line>
           <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/wangchu/controller/UserController.java</url>
-          <line>114</line>
-          <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/wangchu/util/SensitiveFilter.java</url>
@@ -492,6 +494,31 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/wangchu/service/LikeService.java</url>
           <line>39</line>
           <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wangchu/controller/FollowController.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wangchu/controller/FollowController.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wangchu/service/FollowService.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wangchu/controller/UserController.java</url>
+          <line>201</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wangchu/controller/UserController.java</url>
+          <line>210</line>
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

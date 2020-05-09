@@ -124,4 +124,14 @@ public class MapperTest {
         }
         messageMapper.updateLetterRead(list,1);
     }
+
+    @Test
+    public void selectCommentCount(){
+        int i = commentMapper.selectCountByUserId(157, 1);
+        List<Comment> comments = commentMapper.selectCommentsByUserId(157, 1, 0, 5);
+        for(Comment c:comments){
+            System.out.println(c);
+        }
+        System.out.println(i);
+    }
 }

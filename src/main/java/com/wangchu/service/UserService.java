@@ -2,14 +2,15 @@ package com.wangchu.service;
 
 import com.wangchu.dal.entity.LoginTicket;
 import com.wangchu.dal.entity.User;
-import com.wangchu.dao.mapper.LoginTicketMapper;
 import com.wangchu.dao.mapper.UserMapper;
 import com.wangchu.util.CommonUtils;
 import com.wangchu.util.CommunityConstant;
 import com.wangchu.util.MailClient;
+import com.wangchu.util.RedisKeyUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -19,13 +20,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserService {
     @Autowired
     UserMapper userMapper;
-    @Autowired
-    LoginTicketMapper loginTicketMapper;
+//    @Autowired
+//    LoginTicketMapper loginTicketMapper;
     @Value("${community.context-path}")
     private String domain;
     @Value("${server.servlet.context-path}")
@@ -34,10 +36,16 @@ public class UserService {
     TemplateEngine templateEngine;
     @Autowired
     MailClient mailClient;
+    @Autowired
+    RedisTemplate redisTemplate;
 
 
     public User selectUserById(int id){
-        User user = userMapper.selectUserById(id);
+//        User user = userMapper.selectUserById(id);
+        User user = getRedisUser(id);
+        if(user==null){
+            user=initRedisUser(id);
+        }
         return user;
     }
 
@@ -85,10 +93,15 @@ public class UserService {
     }
 
     public int Activation(String userId,String code){
-        User user = userMapper.selectUserById(Integer.parseInt(userId));
+//        User user = userMapper.selectUserById(Integer.parseInt(userId));
+        User user = getRedisUser(Integer.parseInt(userId));
+        if(user==null){
+            user=initRedisUser(Integer.parseInt(userId));
+        }
         if(user.getStatus()==1){
             return CommunityConstant.ACTIVATION_REPEAT;
         }else if(user.getActivationCode().equals(code)){
+            delRedisUser(Integer.parseInt(userId));
             userMapper.updateStatusById(1,user.getId());
             return CommunityConstant.ACTIVATION_SUCCESS;
         }else{
@@ -135,12 +148,18 @@ public class UserService {
         int ticketSeconds = rememberme?CommunityConstant.LONG_TICKETTIME:CommunityConstant.DEFAULT_TICKETTIME;
         map.put("expired",ticketSeconds);
         loginTicket.setExpired(new Date(System.currentTimeMillis()+ticketSeconds*1000));
-        loginTicketMapper.insertLoginTicket(loginTicket);
+        String redisKey = RedisKeyUtil.getLoginTicket(loginTicket.getTicket());
+        redisTemplate.opsForValue().set(redisKey,loginTicket,3600, TimeUnit.SECONDS);
+//        loginTicketMapper.insertLoginTicket(loginTicket);
         return map;
     }
 
     public void logout(String ticket){
-        loginTicketMapper.updateLoginTicketStatus(ticket,1);
+        String redisKey = RedisKeyUtil.getLoginTicket(ticket);
+        LoginTicket loginTicket = (LoginTicket) redisTemplate.opsForValue().get(redisKey);
+        loginTicket.setStatus(1);
+        redisTemplate.opsForValue().set(redisKey,loginTicket,3600, TimeUnit.SECONDS);
+//        loginTicketMapper.updateLoginTicketStatus(ticket,1);
     }
 
     public Map<String,Object> sendVerificationMail(String mail,String kaptcha) throws MessagingException {
@@ -193,16 +212,22 @@ public class UserService {
     }
 
     public LoginTicket findLoginTicket(String ticket){
-        LoginTicket loginTicket = loginTicketMapper.selectLoginTicketByTicket(ticket);
+        String redisKey = RedisKeyUtil.getLoginTicket(ticket);
+        LoginTicket loginTicket = (LoginTicket) redisTemplate.opsForValue().get(redisKey);
+//        LoginTicket loginTicket = loginTicketMapper.selectLoginTicketByTicket(ticket);
         return loginTicket;
     }
 
     public int updateUserHeaderUrl(String url,int userId){
+        delRedisUser(userId);
         return userMapper.updataHeaderUrlById(url,userId);
     }
 
     public Map<String,Object> updatePassword(String oldPassword,String newPassword,int userId){
-        User user = userMapper.selectUserById(userId);
+        User user = getRedisUser(userId);
+        if(user==null){
+            user=initRedisUser(userId);
+        }
         Map<String,Object> map = new HashMap<String, Object>();
         oldPassword = CommonUtils.md5(oldPassword+user.getSalt());
         if(!user.getPassword().equals(oldPassword)){
@@ -211,10 +236,30 @@ public class UserService {
         }
         newPassword = CommonUtils.md5(newPassword+user.getSalt());
         userMapper.updatePasswordById(newPassword,userId);
+        delRedisUser(userId);
         return map;
     }
 
     public User findUserByName(String username){
         return userMapper.selectUserByUsername(username);
+    }
+
+    //1.缓存取值
+    public User getRedisUser(int userId){
+        String redisKey =RedisKeyUtil.getUserKey(userId);
+        User user = (User) redisTemplate.opsForValue().get(redisKey);
+        return user;
+    }
+    //2.缓存初始化
+    public User initRedisUser(int userId){
+        String redisKey = RedisKeyUtil.getUserKey(userId);
+        User user = userMapper.selectUserById(userId);
+        redisTemplate.opsForValue().set(redisKey,user,3600,TimeUnit.SECONDS);
+        return user;
+    }
+    //3.修改删除缓存
+    public void delRedisUser(int userId){
+        String redisKey = RedisKeyUtil.getUserKey(userId);
+        redisTemplate.delete(redisKey);
     }
 }

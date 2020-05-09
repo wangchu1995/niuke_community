@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="icon" href="https://static.nowcoder.com/images/logo_87_87.png"/>
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}" crossorigin="anonymous">
-	<link rel="stylesheet" th:href="@{css/global.css}" />
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
 	<title>牛客网-首页</title>
 </head>
 <body>	
@@ -40,7 +40,7 @@
 									<img th:src="${loginUser.headerUrl}"  class="rounded-circle" style="width:30px;"/>
 								</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-									<a class="dropdown-item text-center" th:href="@{site/profile.html}">个人主页</a>
+									<a class="dropdown-item text-center" th:href="@{|/user/profile/${loginUser.id}|}">个人主页</a>
 									<a class="dropdown-item text-center" th:href="@{/user/setting}">账号设置</a>
 									<a class="dropdown-item text-center" th:href="@{/logout}">退出登录</a>
 									<div class="dropdown-divider"></div>
@@ -117,10 +117,10 @@
 					</div>
 				</div>
 				
-				 帖子列表
+<!--			 帖子列表-->
 				<ul class="list-unstyled">
 					<li class="media pb-3 pt-3 mb-3 border-bottom" th:each="map:${postlist}">
-						<a href="site/profile.html">
+						<a th:href="@{|/user/profile/${map.user.id}|}">
 							<img th:src="${map.user.headerUrl}" class="mr-4 rounded-circle user-header" alt="用户头像">
 						</a>
 						<div class="media-body">
@@ -132,7 +132,9 @@
 							<div class="text-muted font-size-12">
 								<u class="mr-3" th:utext="${map.user.username}"></u> 发布于 <b th:text="${#dates.format(map.post.createTime,'yy-MM-dd HH:mm:ss')}"></b>
 								<ul class="d-inline float-right">
-									<li class="d-inline ml-2">赞 11</li>
+									<a href="javascript:;" th:onclick="|like(this,1,${map.post.id},${map.user.id});|" class="text-primary">
+										<b th:text="${map.postLikeStatus==1?'已赞':'赞'}">赞 </b>
+										<i th:text="${map.postLikeStatus}">11</i></a>
 									<li class="d-inline ml-2">|</li>
 									<li class="d-inline ml-2">回帖数 <span th:text="${map.post.commentCount}"></span></li>
 								</ul>
@@ -230,5 +232,6 @@
 	<script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.js}" crossorigin="anonymous"></script>
 	<script th:src="@{js/global.js}"></script>
 	<script th:src="@{js/index.js}"></script>
+	<script th:src="@{js/like.js}"></script>
 </body>
 </html>

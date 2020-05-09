@@ -16,4 +16,9 @@ public interface CommentMapper {
 
     //3.插入一条评论
     int insertOneComment(Comment comment);
+
+    //根据userId和entityType查询评论
+    List<Comment> selectCommentsByUserId(@Param("userId") int userId,@Param("entityType") int entityType,@Param("offset") int offset,@Param("limit") int limit);
+
+    int selectCountByUserId(@Param("userId") int userId,@Param("entityType") int entityType);
 }

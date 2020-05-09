@@ -1,10 +1,13 @@
 package com.wangchu.controller;
 
 import com.wangchu.annotation.LoginRequired;
+import com.wangchu.dal.entity.Comment;
+import com.wangchu.dal.entity.DiscussPost;
+import com.wangchu.dal.entity.Page;
 import com.wangchu.dal.entity.User;
-import com.wangchu.service.LikeService;
-import com.wangchu.service.UserService;
+import com.wangchu.service.*;
 import com.wangchu.util.CommonUtils;
+import com.wangchu.util.CommunityConstant;
 import com.wangchu.util.HostHolder;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -23,7 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/user")
@@ -36,10 +39,16 @@ public class UserController {
     String domain;
     @Value("${server.servlet.context-path}")
     String contextPath;
-    @Value("${community.path.upload}")
+    @Value("${community.path.upload}/")
     String uploadPath;
     @Autowired
     LikeService likeService;
+    @Autowired
+    FollowService followService;
+    @Autowired
+    DiscussPostService discussPostService;
+    @Autowired
+    CommentService commentService;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -139,6 +148,81 @@ public class UserController {
         model.addAttribute("user",user);
         int userLikeCount = likeService.findUserLikeCount(user.getId());
         model.addAttribute("userLikeCount",userLikeCount);
+        //查询关注数
+        long followeeNum = followService.findFolloweeNum(user.getId(), CommunityConstant.ENTITY_TYPE_USER);
+        model.addAttribute("followeeNum",followeeNum);
+        //查询粉丝数
+        long followerNum = followService.findFollowerNum(user.getId(), CommunityConstant.ENTITY_TYPE_USER);
+        model.addAttribute("followerNum",followerNum);
+        //查询是否关注
+        boolean hasFollowed = false;
+        if(hostHolder.getUsers()!=null){
+            hasFollowed = followService.findHasFollowed(hostHolder.getUsers().getId(),CommunityConstant.ENTITY_TYPE_USER,user.getId());
+        }
+        model.addAttribute("hasFollowed",hasFollowed);
         return "/site/profile";
+    }
+
+    //查询我的帖子
+    @RequestMapping(path = "/profile/my-post",method = RequestMethod.GET)
+    public String getMyPost(Page page, Model model){
+        User user = hostHolder.getUsers();
+        //设置分页
+        model.addAttribute("user",user);
+        page.setPath("/profile/my-post");
+        page.setTotalItems(discussPostService.findDiscussPostNumByUserId(user.getId()));
+        page.setShowItems(5);
+
+        //帖子查询,处理
+        int postNumByUserId = discussPostService.findDiscussPostNumByUserId(user.getId());
+        model.addAttribute("postNum",postNumByUserId);
+        List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
+        List<DiscussPost> discussPostList = discussPostService.findDiscussPostByUserId(user.getId(),page.getOffset(),page.getShowItems());
+        if(discussPostList!=null){
+            for(DiscussPost discussPost:discussPostList){
+                Map<String,Object> map = new HashMap<String, Object>();
+                map.put("post",discussPost);
+                map.put("user",user);
+                long likeCount = likeService.findLikeCount(CommunityConstant.ENTITY_TYPE_POST,discussPost.getId());
+                int likeStatus = user==null?0:likeService.findLikeStatus(user.getId(),CommunityConstant.ENTITY_TYPE_POST,discussPost.getId());
+                map.put("postLikeCount",likeCount);
+                map.put("postLikeStatus",likeStatus);
+                list.add(map);
+            }
+        }
+
+        model.addAttribute("postlist",list);
+        model.addAttribute("page",page);
+        return "/site/my-post";
+    }
+
+    //查询我的回复
+    @RequestMapping(path = "/profile/my-reply",method = RequestMethod.GET)
+    public String getMyReply(Page page, Model model){
+        User user = hostHolder.getUsers();
+        model.addAttribute("user",user);
+        //处理分页
+        page.setPath("/profile/my-reply");  //分页的访问路径虽然相同，但是每次访问携带的page不同
+        page.setShowItems(5);
+        page.setTotalItems(commentService.selectCountByUserId(user.getId(),CommunityConstant.ENTITY_TYPE_POST));
+
+        //处理评论
+        List<Map<String,Object>> list = new ArrayList<>();
+        List<Comment> comments = commentService.selectCommentByUserId(user.getId(),CommunityConstant.ENTITY_TYPE_POST,page.getOffset(),page.getShowItems());
+        if(comments!=null){
+            for(Comment c:comments){
+                Map<String,Object> map = new HashMap<>();
+                map.put("comment",c);
+                int entityId = c.getEntityId();
+                //查询的就是帖子，mapper里面写着条件entityType=1
+                DiscussPost discussPost = discussPostService.selectOneDiscussPost(entityId);
+                map.put("post",discussPost);
+                list.add(map);
+            }
+        }
+        model.addAttribute("cMapList",list);
+        model.addAttribute("commentsNum",page.getShowItems());
+
+        return "/site/my-reply";
     }
 }
