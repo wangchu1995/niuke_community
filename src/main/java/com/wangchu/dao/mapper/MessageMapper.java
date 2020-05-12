@@ -24,4 +24,14 @@ public interface MessageMapper {
     //7.修改私信为已读
     int updateLetterRead(@Param("ids") List<Integer> ids,@Param("status") int status);
 
+    //8.查询某个主题下最新的通知
+    Message findLatestTopicMessage(@Param("userId")int userId,@Param("topic")String topic);
+    //9.查询某个主题所包含的通知的数量
+    int findTopicMessageNum(@Param("userId")int userId,@Param("topic")String topic);
+    //10.查询某个主题下未读的通知的数量
+    int findUnreadTopicNum(@Param("userId")int userId,@Param("topic")String topic);
+
+    //11.查询某个主题下的所有通知
+    List<Message> findTopicMessage(@Param("userId")int userId,@Param("topic")String topic,@Param("offset")int offset,@Param("limit")int limit);
+
 }

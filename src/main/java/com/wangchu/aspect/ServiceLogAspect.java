@@ -27,6 +27,8 @@ public class ServiceLogAspect {
     public void before(JoinPoint joinPoint){
         // 用户[1.2.3.4]，在[xxx]时间，访问了[com.nowcoder.community.service.xx()].
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        //当不是通过controller调用service，而是消息队列调用service时，是没有请求数据的
+        if(requestAttributes==null) return;
         HttpServletRequest request = requestAttributes.getRequest();
         String ip = request.getRemoteHost();
         String time = new SimpleDateFormat("YY-MM-dd HH:mm:ss").format(new Date());

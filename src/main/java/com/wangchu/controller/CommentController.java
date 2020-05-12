@@ -1,8 +1,13 @@
 package com.wangchu.controller;
 
 import com.wangchu.dal.entity.Comment;
+import com.wangchu.dal.entity.DiscussPost;
+import com.wangchu.dal.entity.Event;
 import com.wangchu.dal.entity.User;
+import com.wangchu.event.EventProducer;
 import com.wangchu.service.CommentService;
+import com.wangchu.service.DiscussPostService;
+import com.wangchu.util.CommunityConstant;
 import com.wangchu.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +25,10 @@ public class CommentController {
     HostHolder hostHolder;
     @Autowired
     CommentService commentService;
+    @Autowired
+    EventProducer  eventProducer;
+    @Autowired
+    DiscussPostService discussPostService;
 
     @RequestMapping(path = "/add/{postId}",method = RequestMethod.POST)
     public String addPost(@PathVariable("postId")int postId, Comment comment){
@@ -29,6 +38,24 @@ public class CommentController {
         comment.setCreateTime(new Date());
         comment.setStatus(0);
         commentService.intsertOneComment(comment);
+
+        //发送系统通知事件,同时添加了评论
+        Event event = new Event();
+        event.setTopic(CommunityConstant.TOPIC_COMMENT);
+        event.setUserId(hostHolder.getUsers().getId());
+        event.setEntityType(comment.getEntityType());
+        event.setEntityId(comment.getEntityId())
+                .setData("postId",postId);
+        //评论和回复需要查表才能知道回复的是谁
+        if(comment.getEntityType()==CommunityConstant.ENTITY_TYPE_COMMENT){
+            Comment target = commentService.selectCommentById(comment.getEntityId());//通过回复ID查询
+            event.setEntityUserId(target.getTargetId());
+        }else if(comment.getEntityType()==CommunityConstant.ENTITY_TYPE_POST){
+            //回复的是帖子:
+            DiscussPost post = discussPostService.selectOneDiscussPost(comment.getEntityId());//通过帖子id查询
+            event.setEntityUserId(post.getUserId());
+        }
+        eventProducer.sendMessage(event);
 
         return "redirect:/discuss/detail/"+postId;
     }

@@ -52,4 +52,8 @@ public class CommentService {
     public int selectCountByUserId(int userId,int entityType){
         return commentMapper.selectCountByUserId(userId,entityType);
     }
+
+    public Comment selectCommentById(int id){
+        return commentMapper.selectCommentById(id);
+    }
 }

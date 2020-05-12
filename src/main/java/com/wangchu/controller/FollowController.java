@@ -1,7 +1,9 @@
 package com.wangchu.controller;
 
+import com.wangchu.dal.entity.Event;
 import com.wangchu.dal.entity.Page;
 import com.wangchu.dal.entity.User;
+import com.wangchu.event.EventProducer;
 import com.wangchu.service.FollowService;
 import com.wangchu.service.UserService;
 import com.wangchu.util.CommonUtils;
@@ -26,6 +28,8 @@ public class FollowController {
     HostHolder hostHolder;
     @Autowired
     UserService userService;
+    @Autowired
+    EventProducer eventProducer;
 
     @RequestMapping(path = "/follow",method = RequestMethod.POST)
     @ResponseBody
@@ -33,6 +37,10 @@ public class FollowController {
         User user = hostHolder.getUsers();
         if(user == null) throw new IllegalArgumentException("用户不能为空");
         followService.follow(user.getId(),entityType,entityId);
+        //只能关注用户，所以目标直接传递entityId
+        Event event = new Event().setTopic(CommunityConstant.TOPIC_FOLLOW).setUserId(user.getId())
+                .setEntityType(entityType).setEntityId(entityId).setEntityUserId(entityId);
+        eventProducer.sendMessage(event);
         return CommonUtils.getJSONString(0,"关注成功");
     }
 

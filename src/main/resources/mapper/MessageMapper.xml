@@ -61,5 +61,39 @@
         </foreach>
     </update>
 
+    <select id="findLatestTopicMessage" resultType="Message">
+        select <include refid="selectField"/> from message where id in
+        (select max(id) from message
+        where from_id=1 and status!=2
+        and conversation_id = #{topic}
+        and to_id=#{userId});
+    </select>
+
+    <select id="findTopicMessageNum" resultType="int">
+        select count(id) from message
+        where from_id=1 and status!=2
+        and conversation_id = #{topic}
+        and to_id=#{userId};
+    </select>
+
+    <select id="findUnreadTopicNum" resultType="int">
+        select count(id) from message
+        where from_id=1 and status=0
+        and to_id=#{userId}
+        <if test="topic!=null">
+            and conversation_id = #{topic}
+        </if>
+    </select>
+
+    <select id="findTopicMessage" resultType="Message">
+        select <include refid="selectField"/> from message
+        where from_id=1 and status!=2
+        and to_id=#{userId}
+        <if test="topic!=null">
+            and conversation_id = #{topic}
+        </if>
+         order by create_time desc limit #{offset},#{limit}
+    </select>
+
 
 </mapper>

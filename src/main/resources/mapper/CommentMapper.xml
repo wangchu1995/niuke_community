@@ -21,7 +21,7 @@
         where entity_type=#{entityType} and entity_id=#{entityId};
     </select>
 
-    <insert id="insertOneComment" parameterType="Comment">
+    <insert id="insertOneComment" parameterType="Comment" keyProperty="id">
         insert comment(<include refid="insertField"/>)
         values(#{userId},#{entityType},#{entityId},#{targetId},#{content},#{status},#{createTime});
     </insert>
@@ -38,6 +38,11 @@
         select count(id) from comment
         where user_id=#{userId} and status=0
         and entity_type = #{entityType};
+    </select>
+
+    <select id="selectCommentById" resultType="Comment">
+        select <include refid="selectField"/> from comment
+        where id=#{id};
     </select>
 
 
