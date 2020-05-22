@@ -1,4 +1,4 @@
-import com.wangchu.NiukeApplication;
+import com.wangchu.WCApplication;
 import com.wangchu.service.AlphaService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = NiukeApplication.class)
+@ContextConfiguration(classes = WCApplication.class)
 public class ServiceTest {
     @Autowired
     AlphaService alphaService;

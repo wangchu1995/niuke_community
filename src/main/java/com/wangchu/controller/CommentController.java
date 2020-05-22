@@ -9,13 +9,16 @@ import com.wangchu.service.CommentService;
 import com.wangchu.service.DiscussPostService;
 import com.wangchu.util.CommunityConstant;
 import com.wangchu.util.HostHolder;
+import com.wangchu.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 @Controller
@@ -29,6 +32,8 @@ public class CommentController {
     EventProducer  eventProducer;
     @Autowired
     DiscussPostService discussPostService;
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @RequestMapping(path = "/add/{postId}",method = RequestMethod.POST)
     public String addPost(@PathVariable("postId")int postId, Comment comment){
@@ -54,7 +59,16 @@ public class CommentController {
             //回复的是帖子:
             DiscussPost post = discussPostService.selectOneDiscussPost(comment.getEntityId());//通过帖子id查询
             event.setEntityUserId(post.getUserId());
+
+            //修改了帖子,统计入缓存,定时重新计算帖子分数
+            String redisKey = RedisKeyUtil.getPostScore();
+            //设置key的过期时间
+            redisTemplate.expire(redisKey,1000*3600*10, TimeUnit.MILLISECONDS);
+            redisTemplate.opsForSet().add(redisKey,post.getId());
         }
+        eventProducer.sendMessage(event);
+        event.setTopic(CommunityConstant.TOPIC_PUBLISH).setEntityType(CommunityConstant.ENTITY_TYPE_COMMENT)
+                .setEntityId(comment.getId()).setUserId(user.getId());
         eventProducer.sendMessage(event);
 
         return "redirect:/discuss/detail/"+postId;

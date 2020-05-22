@@ -1,4 +1,4 @@
-import com.wangchu.NiukeApplication;
+import com.wangchu.WCApplication;
 import com.wangchu.util.CommonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = NiukeApplication.class)
+@ContextConfiguration(classes = WCApplication.class)
 public class UtilTest {
 
     @Test

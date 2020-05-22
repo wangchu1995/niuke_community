@@ -1,4 +1,4 @@
-import com.wangchu.NiukeApplication;
+import com.wangchu.WCApplication;
 import com.wangchu.dal.entity.Comment;
 import com.wangchu.dal.entity.DiscussPost;
 import com.wangchu.dal.entity.LoginTicket;
@@ -20,7 +20,7 @@ import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = NiukeApplication.class)
+@ContextConfiguration(classes = WCApplication.class)
 public class MapperTest {
     @Autowired
     LoginTicketMapper loginTicketMapper;

@@ -16,7 +16,15 @@ public class CommunityConstant {
     public static final String TOPIC_COMMENT="comment";
     public static final String TOPIC_LIKE="like";
     public static final String TOPIC_FOLLOW="follow";
+    public static final String TOPIC_PUBLISH="publish";
+    public static final String TOPIC_DELETEPOST="deletePost";
+    public static final String TOPIC_SHARE="share";
 
     //系统用户Id
     public static final int SYSTEM_COMMENT_ID=1;
+
+    //系统用户权限
+    public static final String AUTHORITY_USER="user";
+    public static final String AUTHORITY_ADMIN = "admin";
+    public static final String AUTHORITY_MODERATOR="moderator";
 }

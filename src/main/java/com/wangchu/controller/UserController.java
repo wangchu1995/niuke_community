@@ -1,5 +1,7 @@
 package com.wangchu.controller;
 
+import com.qiniu.util.Auth;
+import com.qiniu.util.StringMap;
 import com.wangchu.annotation.LoginRequired;
 import com.wangchu.dal.entity.Comment;
 import com.wangchu.dal.entity.DiscussPost;
@@ -19,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +29,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -49,15 +55,49 @@ public class UserController {
     DiscussPostService discussPostService;
     @Autowired
     CommentService commentService;
+    @Value("${qiniu.access.key}")
+    private String qiniuAccessKey;
+    @Value("${qiniu.secret.key}")
+    private String qiniuSecretKey;
+    @Value("${qiniu.headerBucket.name}")
+    private String qiniuHeaderName;
+    @Value("${qiniu.headerBucket.url}")
+    private String qiniuHeaderUrl;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    //获取用户设置页面
+    //因为在用户设置页面上传头像，所以七牛云的配置参数都在这里提前设置好，发给七牛云
     @LoginRequired
     @RequestMapping(path = "/setting",method = RequestMethod.GET)
-    public String getSettingPage(){
+    public String getSettingPage(Model model) {
+        String fileName = CommonUtils.getUUID();
+        //获取上传七牛的配置信息，发给浏览器
+        StringMap policy = new StringMap();
+        //用户上传成功，七牛与返回json,在这里设置
+        policy.put("returnBody", CommonUtils.getJSONString(0));
+        Auth auth = Auth.create(qiniuAccessKey,qiniuSecretKey);
+        //设置返回给页面的key的有效时间
+        String uploadToken = auth.uploadToken(qiniuHeaderName, fileName, 3600, policy);
+        model.addAttribute("uploadToken",uploadToken);
+        model.addAttribute("fileName",fileName);
         return "/site/setting";
     }
 
+    @RequestMapping(path = "/header/url",method = RequestMethod.POST)
+    @ResponseBody
+    public String updateHeader(String fileName){
+        if(StringUtils.isBlank(fileName)){
+            throw new RuntimeException("文件名不能为空！");
+        }
+        String url = qiniuHeaderUrl+"/"+fileName;
+        userService.updateUserHeaderUrl(url,hostHolder.getUsers().getId());
+        return CommonUtils.getJSONString(0);
+    }
+
+    //上传头像
+    ///废弃，改为直接上传给七牛云服务器，而不是存储在服务器上了
+    //请求改为通知你更改header路径
     @LoginRequired
     @RequestMapping(path = "/upload",method = RequestMethod.POST)
     public String uploadHeaderUrl(MultipartFile headerImage,Model model){
@@ -91,6 +131,8 @@ public class UserController {
         return "redirect:/index";
     }
 
+
+    //废弃，获取头像去七牛云获取
     @RequestMapping(path = "/header/{fileName}",method = RequestMethod.GET)
     public void getHeader(@PathVariable("fileName") String fileName, HttpServletResponse response) throws IOException {
         //1.服务存放路径
@@ -118,6 +160,7 @@ public class UserController {
         }
     }
 
+    //修改密码
     @RequestMapping(path = "/password",method = RequestMethod.POST)
     public String updatePassword(String oldPassword,String newPassword,Model model){
         //1.判空
@@ -142,6 +185,7 @@ public class UserController {
         return "/site/setting";
     }
 
+    //获取用户详情页面
     @RequestMapping(path = "/profile/{userId}",method = RequestMethod.GET)
     public String getProfilePage(@PathVariable("userId")int userId,Model model){
         User user = userService.selectUserById(userId);
@@ -177,7 +221,7 @@ public class UserController {
         int postNumByUserId = discussPostService.findDiscussPostNumByUserId(user.getId());
         model.addAttribute("postNum",postNumByUserId);
         List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
-        List<DiscussPost> discussPostList = discussPostService.findDiscussPostByUserId(user.getId(),page.getOffset(),page.getShowItems());
+        List<DiscussPost> discussPostList = discussPostService.findDiscussPostByUserId(user.getId(),page.getOffset(),page.getShowItems(),0);
         if(discussPostList!=null){
             for(DiscussPost discussPost:discussPostList){
                 Map<String,Object> map = new HashMap<String, Object>();
@@ -204,11 +248,11 @@ public class UserController {
         //处理分页
         page.setPath("/profile/my-reply");  //分页的访问路径虽然相同，但是每次访问携带的page不同
         page.setShowItems(5);
-        page.setTotalItems(commentService.selectCountByUserId(user.getId(),CommunityConstant.ENTITY_TYPE_POST));
+        page.setTotalItems(commentService.selectCountByUserId(user.getId(),CommunityConstant.ENTITY_TYPE_COMMENT));
 
         //处理评论
         List<Map<String,Object>> list = new ArrayList<>();
-        List<Comment> comments = commentService.selectCommentByUserId(user.getId(),CommunityConstant.ENTITY_TYPE_POST,page.getOffset(),page.getShowItems());
+        List<Comment> comments = commentService.selectCommentByUserId(user.getId(),CommunityConstant.ENTITY_TYPE_COMMENT,page.getOffset(),page.getShowItems());
         if(comments!=null){
             for(Comment c:comments){
                 Map<String,Object> map = new HashMap<>();

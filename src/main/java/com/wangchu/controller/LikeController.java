@@ -8,7 +8,9 @@ import com.wangchu.service.LikeService;
 import com.wangchu.util.CommonUtils;
 import com.wangchu.util.CommunityConstant;
 import com.wangchu.util.HostHolder;
+import com.wangchu.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class LikeController {
@@ -25,6 +28,8 @@ public class LikeController {
     private HostHolder hostHolder;
     @Autowired
     private EventProducer eventProducer;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @RequestMapping(path = "/like",method = RequestMethod.POST)
     @ResponseBody
@@ -48,6 +53,13 @@ public class LikeController {
                     .setUserId(user.getId()).setData("postId",postId);
             eventProducer.sendMessage(event);
         }
+
+        //修改了帖子,统计入缓存,定时重新计算帖子分数
+        String redisKey = RedisKeyUtil.getPostScore();
+        //设置key的过期时间
+        redisTemplate.expire(redisKey,1000*3600*10, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForSet().add(redisKey,postId);
+
         return CommonUtils.getJSONString(0,null,map);
     }
 

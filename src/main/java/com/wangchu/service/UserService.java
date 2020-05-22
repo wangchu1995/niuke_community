@@ -11,15 +11,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.mail.MessagingException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -138,7 +137,7 @@ public class UserService {
             return map;
         }
 
-        //3.创建ticket登录凭证
+        //3.创建ticket登录凭证,存储入redis(之前是mysql)
         LoginTicket loginTicket = new LoginTicket();
         loginTicket.setUserId(user.getId());
         loginTicket.setStatus(0);
@@ -151,6 +150,8 @@ public class UserService {
         String redisKey = RedisKeyUtil.getLoginTicket(loginTicket.getTicket());
         redisTemplate.opsForValue().set(redisKey,loginTicket,3600, TimeUnit.SECONDS);
 //        loginTicketMapper.insertLoginTicket(loginTicket);
+
+
         return map;
     }
 
@@ -160,6 +161,9 @@ public class UserService {
         loginTicket.setStatus(1);
         redisTemplate.opsForValue().set(redisKey,loginTicket,3600, TimeUnit.SECONDS);
 //        loginTicketMapper.updateLoginTicketStatus(ticket,1);
+
+        //退出登录，清除Security中的数据
+        SecurityContextHolder.clearContext();
     }
 
     public Map<String,Object> sendVerificationMail(String mail,String kaptcha) throws MessagingException {
@@ -261,5 +265,26 @@ public class UserService {
     public void delRedisUser(int userId){
         String redisKey = RedisKeyUtil.getUserKey(userId);
         redisTemplate.delete(redisKey);
+    }
+
+    //获取用户的权限列表
+    public Collection<? extends GrantedAuthority> getAuthorites(int userId){
+        User user = userMapper.selectUserById(userId);
+        List<GrantedAuthority> list = new ArrayList<>();
+        GrantedAuthority grantedAuthority = new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                switch (user.getType()) {
+                    case 2:
+                        return CommunityConstant.AUTHORITY_MODERATOR;
+                    case 1:
+                        return CommunityConstant.AUTHORITY_ADMIN;
+                    default:
+                        return CommunityConstant.AUTHORITY_USER;
+                }
+            }
+        };
+        list.add(grantedAuthority);
+        return list;
     }
 }

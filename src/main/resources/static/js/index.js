@@ -19,10 +19,12 @@ function publish() {
 			$("#hintModal").text(data.msg);
 			//显示提示框
 			$("#hintModal").modal("show");
+
 			setTimeout(function(){
 				$("#hintModal").modal("hide");
 			}, 2000);
+
 		}
 	)
-
+	location.reload();
 }

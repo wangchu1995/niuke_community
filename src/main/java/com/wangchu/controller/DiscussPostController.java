@@ -1,9 +1,7 @@
 package com.wangchu.controller;
 
-import com.wangchu.dal.entity.Comment;
-import com.wangchu.dal.entity.DiscussPost;
-import com.wangchu.dal.entity.Page;
-import com.wangchu.dal.entity.User;
+import com.wangchu.dal.entity.*;
+import com.wangchu.event.EventProducer;
 import com.wangchu.service.CommentService;
 import com.wangchu.service.DiscussPostService;
 import com.wangchu.service.LikeService;
@@ -11,7 +9,10 @@ import com.wangchu.service.UserService;
 import com.wangchu.util.CommonUtils;
 import com.wangchu.util.CommunityConstant;
 import com.wangchu.util.HostHolder;
+import com.wangchu.util.RedisKeyUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping("/discuss")
@@ -34,18 +36,37 @@ public class DiscussPostController {
     CommentService commentService;
     @Autowired
     LikeService likeService;
+    @Autowired
+    EventProducer producer;
+    @Autowired
+    RedisTemplate redisTemplate;
 
     @RequestMapping(path = "/add",method = RequestMethod.POST)
     @ResponseBody
     public String addPost(String title,String content){
         User user = hostHolder.getUsers();
         if(user==null) return CommonUtils.getJSONString(403,"账户未登录");
+        if(StringUtils.isBlank(content)||StringUtils.isBlank(title)) return CommonUtils.getJSONString(403,"缺少内容或标题");
         DiscussPost post = new DiscussPost();
         post.setTitle(title);
         post.setContent(content);
         post.setCreateTime(new Date());
         post.setUserId(user.getId());
+        post.setScore(0d);
         discussPostService.insertDiscustPost(post);
+
+        //添加帖子到搜索引擎,接触KAFKA完成异步添加
+        Event postEvent = new Event().setTopic(CommunityConstant.TOPIC_PUBLISH)
+                .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
+                .setEntityId(post.getId())
+                .setUserId(user.getId());
+        producer.sendMessage(postEvent);
+
+        //修改了帖子,统计入缓存,定时重新计算帖子分数
+        String redisKey = RedisKeyUtil.getPostScore();
+        //设置key的过期时间
+        redisTemplate.expire(redisKey,1000*3600*10, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForSet().add(redisKey,post.getId());
         return CommonUtils.getJSONString(0,"发布成功");
     }
 
@@ -109,5 +130,54 @@ public class DiscussPostController {
         }
         model.addAttribute("commentList",commentList);
         return "/site/discuss-detail";
+    }
+
+    @RequestMapping(path = "/top",method = RequestMethod.POST)
+    @ResponseBody
+    public String setTop(int id){
+        discussPostService.updateType(id,1);
+        User user = hostHolder.getUsers();
+        //帖子状态被修改，需要同步到elasticaSearch搜索引擎
+        Event postEvent = new Event().setTopic(CommunityConstant.TOPIC_PUBLISH)
+                .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
+                .setEntityId(id)
+                .setUserId(user.getId());
+        producer.sendMessage(postEvent);
+        return CommonUtils.getJSONString(0);
+    }
+
+    @RequestMapping(path = "/wonderful",method = RequestMethod.POST)
+    @ResponseBody
+    public String setWonderful(int id){
+        discussPostService.updateStatus(id,1);
+        User user = hostHolder.getUsers();
+        //帖子状态被修改，需要同步到elasticaSearch搜索引擎
+        Event postEvent = new Event().setTopic(CommunityConstant.TOPIC_PUBLISH)
+                .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
+                .setEntityId(id)
+                .setUserId(user.getId());
+        producer.sendMessage(postEvent);
+
+        //修改了帖子,统计入缓存,定时重新计算帖子分数
+        String redisKey = RedisKeyUtil.getPostScore();
+        //设置key的过期时间
+        redisTemplate.expire(redisKey,1000*3600*10, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForSet().add(redisKey,id);
+
+        return CommonUtils.getJSONString(0);
+    }
+
+    @RequestMapping(path = "/delete",method = RequestMethod.POST)
+    @ResponseBody
+    public String setDelete(int id){
+        discussPostService.updateStatus(id,2);
+        User user = hostHolder.getUsers();
+        //帖子状态被修改，需要同步到elasticaSearch搜索引擎
+        Event postEvent = new Event().setTopic(CommunityConstant.TOPIC_DELETEPOST)
+                .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
+                .setEntityId(id)
+                .setUserId(user.getId());
+        producer.sendMessage(postEvent);
+        return CommonUtils.getJSONString(0);
     }
 }

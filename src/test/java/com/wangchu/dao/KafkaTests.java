@@ -1,6 +1,6 @@
 package com.wangchu.dao;
 
-import com.wangchu.NiukeApplication;
+import com.wangchu.WCApplication;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +27,7 @@ class KafkaProducerxx{
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = NiukeApplication.class)
+@ContextConfiguration(classes = WCApplication.class)
 public class KafkaTests {
     @Autowired
     KafkaProducerxx kaproducer;

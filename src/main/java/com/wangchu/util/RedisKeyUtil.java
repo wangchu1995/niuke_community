@@ -9,6 +9,9 @@ public class RedisKeyUtil {
     private static final String PREFIX_KAPTCHA = "kaptcha";
     private static final String PREFIX_LOGINTICKE = "loginticket";
     private static final String PREFIX_USER = "user";
+    private static final String PREFIX_UV="uv";
+    private static final String PREFIX_DAU="dau";
+    private static final String PREFIX_POSTSCORE="post";
 
     public static String getLikeKey(int entityType,int entityId){
         return LIKE_PREFIX+SPLIT+entityType+SPLIT+entityId;
@@ -38,5 +41,23 @@ public class RedisKeyUtil {
 
     public static String getUserKey(int userId){
         return PREFIX_USER+ SPLIT+userId;
+    }
+
+    public static String getUVKey(String date){
+        return PREFIX_UV+SPLIT+date;
+    }
+    public static String getUVKey(String start,String end){
+        return PREFIX_UV+SPLIT+start+SPLIT+end;
+    }
+
+    public static String getDAUKey(String date){
+        return PREFIX_DAU+SPLIT+date;
+    }
+    public static String getDAUKey(String start,String end){
+        return PREFIX_DAU+SPLIT+start+SPLIT+end;
+    }
+
+    public static String getPostScore(){
+        return PREFIX_POSTSCORE+SPLIT+"score";
     }
 }

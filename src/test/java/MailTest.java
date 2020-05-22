@@ -1,4 +1,4 @@
-import com.wangchu.NiukeApplication;
+import com.wangchu.WCApplication;
 import com.wangchu.util.MailClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@ import javax.mail.MessagingException;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = NiukeApplication.class)
+@ContextConfiguration(classes = WCApplication.class)
 public class MailTest {
     @Autowired
     MailClient mailClient;

@@ -1,0 +1,38 @@
+$(function() {
+    $("#uploadHeader").submit(uploadHeader);
+});
+
+
+function uploadHeader() {
+    $.ajax({
+        url: "http://upload-z2.qiniup.com",
+        method: "post",
+        processData: false,
+        contentType: false,
+        //把表单对象传给请求
+        data: new FormData($("#uploadHeader")[0]),
+        success: function(data){
+            if(data&&data.code==0){
+                $.post(
+                    CONTEXT_PATH+"/user/header/url",
+                    {"fileName":$("input[name='key']").val()},
+                    function (data) {
+                        data = $.parseJSON(data);
+                        if(data.code==0){
+                            window.location.reload();
+                        }else{
+                            alert(data.msg);
+                        }
+                    }
+                )
+
+            }else{
+                alert("上传文件失败");
+            }
+        }
+    })
+
+    return false;
+};
+
+

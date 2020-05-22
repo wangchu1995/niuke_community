@@ -5,7 +5,10 @@ import com.wangchu.dal.entity.User;
 import com.wangchu.dao.mapper.DiscussPostMapper;
 import com.wangchu.dao.mapper.UserMapper;
 import com.wangchu.util.CommonUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -27,6 +30,8 @@ public class AlphaService {
 
     @Autowired
     TransactionTemplate transactionTemplate;
+
+    private final Logger logger = LoggerFactory.getLogger(AlphaService.class);
 
     @Transactional(isolation = Isolation.READ_UNCOMMITTED,propagation = Propagation.REQUIRED)
     public String save01(){
@@ -85,4 +90,14 @@ public class AlphaService {
             }
         });
     }
+
+    @Async
+    public void execute(){
+        logger.info("多线程异步调用，不用写runnable");
+    }
+
+//    @Scheduled(initialDelay = 10000,fixedRate = 1000)
+//    public void execute02(){
+//        logger.info("自动定时任务，啥也不用管");
+//    }
 }
